@@ -24,12 +24,10 @@ class Conferences extends Model
             $selectWithoudAddress->setFetchMode(\PDO::FETCH_ASSOC);
 
             if (!$selectWithoudAddress->fetch()) {
-                echo 1;
                 $insert = self::$link->prepare("INSERT INTO conferences (title, date, latitude, longitude, country)
                 values (:title, :date, :latitude, :longitude, :country)");
                 $insert->execute($data);
             } else {
-                echo 2;
                 $update = self::$link->prepare("UPDATE conferences SET latitude=:latitude, longitude=:longitude
                 WHERE title='${data['title']}' and date='${data['date']}' and country='${data['country']}'");
 

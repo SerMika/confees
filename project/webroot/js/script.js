@@ -95,8 +95,6 @@ function loadMapCreate() {
 
   //Перемещаем маркер в новое положение
   function placeMarker(location) {
-    console.log(location.lat().toPrecision(8)); //координаты точки - широта
-    console.log(location.lng().toPrecision(8)); //координаты точки - долгота
     if (marker) {
       marker.setPosition(location);
     } else {
@@ -120,7 +118,6 @@ function loadMapCreate() {
   function setLatLngInForms() {
     latInp.value = center.lat;
     lngInp.value = center.lng;
-    console.log(center);
   }
 
   //Вспомогательная функция для отображения либо скрытия маркера
@@ -137,7 +134,6 @@ function loadMapCreate() {
 function changeButtonValue(id) {
   button = document.getElementsByName("buttonDelete")[0];
   button.value = id;
-  console.log(button.value);
 }
 
 //Фукнция для отключения либо включения полей ввода долготы и широты в формах
@@ -156,14 +152,21 @@ function validate() {
   const submit = document.getElementById("submit");
 
   submit.addEventListener("click", function (event) {
+    var title = document.getElementById("title");
     var date = document.getElementsByName("date")[0];
     curDate = new Date();
-    console.log(curDate.getTime());
-    console.log(new Date(date.value).getTime() < curDate.getTime());
+
+    if (title.value.length < 2) {
+      title.setCustomValidity("Название должно содержать не менее 2 символов");
+      event.preventDefault();
+    } else {
+      title.setCustomValidity("");
+    }
+
+    title.reportValidity();
 
     if (new Date(date.value).getTime() < curDate.getTime()) {
       date.setCustomValidity("Введите, пожалуйста, будущую дату");
-      console.log(1);
       event.preventDefault();
     } else {
       date.setCustomValidity("");
@@ -173,44 +176,11 @@ function validate() {
   });
 }
 
-function validateAddress() {
-  const submit = document.getElementById("submit");
-  submit.addEventListener("click", function (event) {
-    event.preventDefault();
-    var addressCheck = document.getElementsByName("addressIsSet")[0];
-    console.log(addressCheck);
-    if (addressCheck.hasAttribute("checked")) {
-      console.log(1);
-      if (!latInp.value) {
-        console.log(1);
-        event.preventDefault();
-        latInp.setCustomValidity(
-          "Заполните это поле, или уберите галочку с чекбокса"
-        );
-      } else {
-        latInp.setCustomValidity("");
-      }
-      latInp.reportValidity();
-      if (!lngInp.value) {
-        console.log(1);
-        event.preventDefault();
-        lngInp.setCustomValidity(
-          "Заполните это поле, или уберите галочку с чекбокса"
-        );
-      } else {
-        lngInp.setCustomValidity("");
-      }
-      lngInp.reportValidity();
-    }
-  });
-}
 
 function selectDefaultOption(value) {
   select = document.getElementById("select").options;
 
   option = Array.apply(null, select).filter((op) => op.value == value);
-  console.log(option[0].id);
   defaultOption = document.getElementById(option[0].id);
-  console.log(defaultOption);
   defaultOption.setAttribute("selected", "selected");
 }

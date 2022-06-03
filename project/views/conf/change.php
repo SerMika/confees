@@ -23,10 +23,10 @@
             <div class="row">
                 <div class="col-0 col-md-2"></div>
                 <div class="form-group col-12 col-md-8">
-                    <label for="formGroupExampleInput">
+                    <label for="title">
                         <h4>Название</h4>
                     </label>
-                    <input type="text" minlength="2" maxlength="255" name="title" value="<?php echo $row["title"] ?>" class="form-control" id="formGroupExampleInput" placeholder="Конференция по..." required>
+                    <input type="text" minlength="2" maxlength="255" name="title" value="<?php echo $row["title"] ?>" class="form-control" id="title" placeholder="Конференция по..." required>
                 </div>
 
             </div>
